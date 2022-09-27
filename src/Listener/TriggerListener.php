@@ -112,6 +112,9 @@ class TriggerListener
         self::addListener(Actions\User\Renamed::class);
         self::addListener(Actions\User\Registered::class);
         self::addListener(Actions\User\Deleted::class);
+
+        self::addListener(Actions\Event\Created::class);
+        self::addListener(Actions\Event\Deleted::class);
     }
 
     public static function addListener(string $action)

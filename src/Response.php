@@ -44,6 +44,16 @@ class Response
     public $timestamp;
 
     /**
+     * @var \DateTime
+     */
+    public $event_start;
+
+    /**
+     * @var \DateTime
+     */
+    public $event_end;
+
+    /**
      * @var User
      */
     public $author;
@@ -156,5 +166,25 @@ class Response
     public function __toString()
     {
         return "Response{title=$this->title,url=$this->url,author={$this->author->display_name}}";
+    }
+
+    /**
+     * @param \DateTime $event_start
+     */
+    public function setEventStart(\DateTime $event_start): self
+    {
+        $this->event_start = $event_start;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $event_end
+     */
+    public function setEventEnd(\DateTime $event_end): self
+    {
+        $this->event_end = $event_end;
+
+        return $this;
     }
 }

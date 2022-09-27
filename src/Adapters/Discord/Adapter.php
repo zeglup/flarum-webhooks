@@ -11,6 +11,8 @@
 
 namespace FoF\Webhooks\Adapters\Discord;
 
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use FoF\Webhooks\Response;
 
 class Adapter extends \FoF\Webhooks\Adapters\Adapter
@@ -44,16 +46,39 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
         if (strlen($title) > 32) {
             $title = substr($title, 0, 29).'...';
         }
-
-        $this->request($url, [
+        $payload = [
             'username'   => $title,
+            'avatar_url' => 'http://h0.glup.cc:8084/static/logo.png',
             'content'    => $response->getExtraText(),
             'embeds'     => [
                 $this->toArray($response),
             ],
-        ]);
+            'components' => $this->components(),
+        ];
+        $this->request($url, $payload);
     }
-
+    public function components(): array
+    {
+        return [
+                    [
+                        'type' => 1,
+                        'components' => [
+                            [
+                                'type'=> 2,
+                                'label'=> 'Yes',
+                                'style'=> 1,
+                                'custom_id'=> 'click_yes'
+                            ],
+                            [
+                                'type'=> 2,
+                                'label'=> 'No',
+                                'style'=> 1,
+                                'custom_id'=> 'click_no'
+                            ],
+                        ]
+                    ]
+        ];
+    }
     /**
      * @param Response $response
      *
@@ -61,18 +86,34 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
      */
     public function toArray(Response $response): array
     {
+        $event_start = Carbon::instance($response->event_start);
+        $event_start->setTimezone(new CarbonTimeZone('Europe/Paris'));
+        $event_start::setLocale('fr');
+
+        $event_end = Carbon::instance($response->event_start);
+        $event_end->setTimezone(new CarbonTimeZone('Europe/Paris'));
+        $event_end::setLocale('fr');
         return [
             'title'       => substr($response->title, 0, 256),
             'url'         => $response->url,
             'description' => $response->description ? substr($response->description, 0, 2048) : null,
-            'author'      => isset($response->author) ? [
-                'name'     => substr($response->author->display_name, 0, 256),
-                'url'      => $response->getAuthorUrl(),
-                'icon_url' => $response->author->avatar_url,
-            ] : null,
             'color'     => $response->getColor(),
-            'timestamp' => $response->timestamp ?? date('c'),
             'type'      => 'rich',
+            'thumbnail'     => [
+                'url' => 'http://f0.glup.cc:8081/assets/files/2022-09-21/1663774021-71221-screen-220305-144217.png',
+            ],
+            'fields' => [
+                [
+                    'name' => 'Début',
+                    'value' => $event_start->translatedFormat('l jS F H:i'),
+                    'inline' => true
+                ],
+                [
+                    'name' => 'Fin',
+                    'value' => $event_end->translatedFormat('l jS F H:i'),
+                    'inline' => true
+                ],
+            ],
         ];
     }
 
