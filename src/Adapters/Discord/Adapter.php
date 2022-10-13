@@ -48,12 +48,11 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
         }
         $payload = [
             'username'   => $title,
-            'avatar_url' => 'http://h0.glup.cc:8084/static/logo.png',
+            'avatar_url' => 'http://www.wolfa.fr/static/logo.png',
             'content'    => $response->getExtraText(),
             'embeds'     => [
                 $this->toArray($response),
             ],
-            'components' => $this->components(),
         ];
         $this->request($url, $payload);
     }
@@ -100,7 +99,7 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
             'color'     => $response->getColor(),
             'type'      => 'rich',
             'thumbnail'     => [
-                'url' => 'http://f0.glup.cc:8081/assets/files/2022-09-21/1663774021-71221-screen-220305-144217.png',
+                'url' => 'http://www.wolfa.fr/static/logo.png',
             ],
             'fields' => [
                 [
