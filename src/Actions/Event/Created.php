@@ -34,7 +34,6 @@ class Created extends Action
                 $event->event->description
             )
             ->setEventStart($event->event->event_start)
-            ->setEventEnd($event->event->event_end)
             ->setAuthor($event->actor)
             ->setColor('34495e')
             ->setTimestamp(Carbon::now());
