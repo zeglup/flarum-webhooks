@@ -47,7 +47,7 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
             $title = substr($title, 0, 29).'...';
         }
         $payload = [
-            'username'   => $title,
+            'username'   => 'Wolfa',
             'avatar_url' => 'http://www.wolfa.fr/static/logo.png',
             'content'    => $response->getExtraText(),
             'embeds'     => [
