@@ -107,11 +107,6 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
                     'value' => $event_start->translatedFormat('l jS F H:i'),
                     'inline' => true
                 ],
-                [
-                    'name' => 'Fin',
-                    'value' => $event_end->translatedFormat('l jS F H:i'),
-                    'inline' => true
-                ],
             ],
         ];
     }
