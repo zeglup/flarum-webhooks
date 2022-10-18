@@ -31,7 +31,7 @@ class Created extends Action
                 $event->event->name
             )
             ->setDescription(
-                $event->event->description
+                $event->discussionUrl
             )
             ->setEventStart($event->event->event_start)
             ->setAuthor($event->actor)
